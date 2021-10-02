@@ -1,4 +1,4 @@
-<!-- PROJECT LOGO -->
+﻿<!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="https://github.com/Andrio-Codes/<NAME>">
@@ -34,7 +34,7 @@
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Andrio-Codes/Image-viewer.git
+   git clone https://github.com/Andrio-Codes/Image-Viewer.git
    ```
 3. Install pip modules
    ```PY
