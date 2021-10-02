@@ -122,6 +122,5 @@ next_button.grid(row=0, column=2, padx=50, pady=10, ipadx=5, ipady=5)
 
 
 
-
 # displaying the window
 root.mainloop()
