@@ -85,17 +85,17 @@ image_label.grid(row=0, column=0, columnspan=3)
 
 # buttons
 # previous button
-previous_button = Button(button_frame, text='<',width=6, height=2, borderwidth=2, relief='solid', activebackground='blue',activeforeground='black')
+previous_button = Button(button_frame, text='<',width=4, height=1, borderwidth=3, relief='solid', activebackground='blue',activeforeground='black')
 # displayed the previous button
 previous_button.grid(row=0, column=0, padx=50, pady=10, ipadx=20, ipady=20)
 
 # delete button
-delete_button = Button(button_frame, text='X',width=5, height=2, borderwidth=2, relief='solid', activebackground='red',activeforeground='black', command=delete_command)
+delete_button = Button(button_frame, text='X',width=4, height=1, borderwidth=3, relief='solid', activebackground='red',activeforeground='black', command=delete_command)
 # displayed the delete button
 delete_button.grid(row=0, column=1, padx=50, pady=10, ipadx=20, ipady=20)
 
 # next button
-next_button = Button(button_frame, text='>',width=5, height=2, borderwidth=2, relief='solid', activebackground='blue',activeforeground='black')
+next_button = Button(button_frame, text='>',width=4, height=1, borderwidth=3, relief='solid', activebackground='blue',activeforeground='black')
 # displayed the next button
 next_button.grid(row=0, column=2, padx=50, pady=10, ipadx=20, ipady=20)
 
