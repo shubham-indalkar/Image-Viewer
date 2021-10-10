@@ -76,12 +76,14 @@ def next_command():
 	# added one extra to n as the index starts from 0
 	n_plus_one = n + 1
 
-	# if n or smaller than 0 then disable the previous button 
+	# if n or smaller than length of list containing the images then disable next button and enable back button
 	if n_plus_one == len(images_in_path):
 		next_button['state'] = 'disabled'
-	# else enabled
+		previous_button['state'] = 'active' # trex for switching back forward
+	# else enable both
 	else:
 	 	next_button['state'] = 'normal'
+	 	previous_button['state'] = 'normal' # trex for switching back forward
 
 	# if images_in_path[-1]:
 	# 	next_button['state'] = 'disabled'
@@ -104,12 +106,14 @@ def back_command():
 	# printed for checking 
 	print('n = ', n)	
 
-	# if n is 0 or smaller than 0 then disable the previous button 
+	# if n is 0 or smaller than 0 then disable the previous button keeping the next button enabled
 	if n <= 0:
 		previous_button['state'] = 'disabled'
-	# else keep enabled
+		next_button['state'] = 'active' # trex for switching back forward
+	# else if n is greater or equal to 1 then enable both
 	elif n >= 1:
 	 	previous_button['state'] = 'normal'
+	 	next_button['state'] = 'normal' # trex for switching back forward
 
 	# if images_in_path[0]:
 	# 	previous_button['state'] = 'disabled'
@@ -121,8 +125,8 @@ def back_command():
 def delete_from_os():
 	global path
 	global images_in_path
-	# used os remove to delete the image
-	os.remove(path + images_in_path[7])
+	# used os remove to delete the image at nth index of the list
+	os.remove(path + images_in_path[n])
 
 
 # function to display warning message and call delete_from_os is chose to delete 
@@ -137,6 +141,7 @@ def delete_command():
 		messagebox.showinfo('Done', 'Successfully deleted')
 
 		# call next button so that the viewer will show next image directly after deleting the current
+		
 
 
 # created the window 
