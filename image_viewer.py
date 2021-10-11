@@ -1,3 +1,5 @@
+#################################### IMPORTING ###################################
+
 # imported everthing from tkinter
 from tkinter import *
 # imported messagebox from tkinter
@@ -8,6 +10,12 @@ import tkinter.font as font
 import os
 # imported PIL to view jpeg images
 from PIL import ImageTk, Image
+
+###################################### END #######################################
+
+
+
+####################################################### FUNCTIONS ########################################################
 
 # function to read the directory and load images
 def read_images():
@@ -76,20 +84,18 @@ def next_command():
 	# added one extra to n as the index starts from 0
 	n_plus_one = n + 1
 
-	# if n or smaller than length of list containing the images then disable next button and enable back button
+	# if n equal to length of list containing the images then disable next button keeping the back button enabled
 	if n_plus_one == len(images_in_path):
 		next_button['state'] = 'disabled'
 		previous_button['state'] = 'active' # trex for switching back forward
 	# else enable both
-	else:
+	elif n_plus_one :
 	 	next_button['state'] = 'normal'
 	 	previous_button['state'] = 'normal' # trex for switching back forward
-
-	# if images_in_path[-1]:
-	# 	next_button['state'] = 'disabled'
-	# # else enabled
-	# else:
-	#  	next_button['state'] = 'normal'
+	# else if there is only one image in the list then disable both next and back button
+	elif len(images_in_path) == 1:
+		next_button['state'] = 'disabled'
+		previous_button['state'] = 'disabled'
 
 
 # fucntion to show previous image
@@ -110,16 +116,16 @@ def back_command():
 	if n <= 0:
 		previous_button['state'] = 'disabled'
 		next_button['state'] = 'active' # trex for switching back forward
+	# else if there is only one image in the list then disable both next and back button
+	elif len(images_in_path) == 1:
+		next_button['state'] = 'disabled'
+		previous_button['state'] = 'disabled'
 	# else if n is greater or equal to 1 then enable both
-	elif n >= 1:
+	else:
 	 	previous_button['state'] = 'normal'
 	 	next_button['state'] = 'normal' # trex for switching back forward
+	
 
-	# if images_in_path[0]:
-	# 	previous_button['state'] = 'disabled'
-	# # else keep enabled
-	# else:
-	#  	previous_button['state'] = 'normal'
 
 # function to delete image from os
 def delete_from_os():
@@ -139,15 +145,49 @@ def delete_command():
 		delete_from_os()
 		# display message that the file is deleted
 		messagebox.showinfo('Done', 'Successfully deleted')
-
-		# call next button so that the viewer will show next image directly after deleting the current
 		
+		# recall read_images after delete -trex
+		read_images()
 
+		## function to call previous image if the last image is deleted
+		# global n
+		# # if the image is not the last image in the list then
+		# if n != -1:
+		# 	# recall read_images after delete -trex
+		# 	read_images()
+		# # else if the image is the last image in the list
+		# elif n == -1:
+		# 	# change value of n to -2, that is to point to the image before the last image
+		# 	n = -2
+		# 	# call the read_image 
+		# 	read_images()
+
+######################################################### END ##########################################################
+
+
+
+############################################ START ##################################################
 
 # created the window 
 root = Tk()
 # changed background color to grey
 root.configure(bg='grey')
+
+# added title to the window
+root.title('Image Viewer')
+
+# used geometry to display window in fixed size and position on desktop
+# format is geometry(width x height+space from left+spcae from up)
+# root.geometry('1280x1024+500+200')
+
+# commnd to open window maximized 
+root.state('zoomed')
+
+############################################ END ################################################
+
+
+
+#################################### FRAMES ###########################################
 
 # created the top frame for displaying images
 image_frame = Frame(root, borderwidth=8, relief='solid', width=1700, height=800)
@@ -157,17 +197,8 @@ image_frame.grid(row=0, column=0, padx=70, pady=15, ipadx=30, ipady=25)
 button_frame = Frame(root, borderwidth=7, relief='solid', width=600, height=60, bg='light cyan')
 button_frame.grid(row=1, column=0, padx=100, pady=5)
 
+##################################### END #############################################
 
-# added title to the window
-root.title('Image Viewer')
-
-
-# used geometry to display window in fixed size and position on desktop
-# format is geometry(width x height+space from left+spcae from up)
-# root.geometry('1280x1024+500+200')
-
-# commnd to open window maximized 
-root.state('zoomed')
 
 
 # declared n as global and assigned 0
@@ -178,9 +209,12 @@ read_images()
 
 
 
-# buttons
-# previous button
+################################################################################ BUTTONS ###################################################################################
+
+################################## PREVIOUS BUTTON ###################################
 previous_button = Button(button_frame, text='<',width=3, height=1, borderwidth=3, relief='solid', activebackground='RoyalBlue1',activeforeground='black', command=back_command)
+# set disabled on default after launching program
+previous_button['state'] = 'disabled'
 # defined font style
 format_font_previous_button = font.Font(size=20)
 # applied font style to button
@@ -188,7 +222,7 @@ previous_button['font'] = format_font_previous_button
 # displayed the previous button
 previous_button.grid(row=0, column=0, padx=50, pady=10, ipadx=5, ipady=5)
 
-# delete button
+#################################### DELETE BUTTON ###################################
 delete_button = Button(button_frame, text='X',width=3, height=1, borderwidth=3, relief='solid', activebackground='red',activeforeground='black', command=delete_command)
 # defined font style
 format_font_delete_button = font.Font(size=20)
@@ -197,7 +231,7 @@ delete_button['font'] = format_font_previous_button
 # displayed the delete button
 delete_button.grid(row=0, column=1, padx=50, pady=10, ipadx=5, ipady=5)
 
-# next button
+################################# NEXT BUTTON ###################################
 next_button = Button(button_frame, text='>',width=3, height=1, borderwidth=3, relief='solid', activebackground='RoyalBlue1',activeforeground='black', command=next_command)
 # defined font style
 format_font_next_button = font.Font(size=20)
@@ -206,7 +240,7 @@ next_button['font'] = format_font_previous_button
 # displayed the next button
 next_button.grid(row=0, column=2, padx=50, pady=10, ipadx=5, ipady=5)
 
-
+################################################################################## END ######################################################################################
 
 
 
