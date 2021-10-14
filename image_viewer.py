@@ -17,6 +17,33 @@ from PIL import ImageTk, Image
 
 ####################################################### FUNCTIONS ########################################################
 
+# function to fetch images from folder and return to main
+def fetch_images():
+	# fetched current path using os 
+	global path 
+	path = os.getcwd()
+	# printed just for checking
+	# print('Path: ', path)
+	
+	# fetched files in current path
+	files_in_path = list(os.listdir(path))
+	# printed just for checking
+	# print('Files in path', files_in_path)
+	
+	# created empty list to store images in path
+	global images_in_path
+	images_in_path = []
+	
+	# iterated in the files and searched for image formats, if image found the appended to images_in_path 
+	for images in files_in_path:
+		if 'jpg' in images or 'png' in images or 'jpeg' in images:
+			# prepended(adding at beginning) \\ with the image name
+			images_in_path.append('\\'+images)
+	# printed just for checking
+	print('Images in path', images_in_path)
+	print('Length of list images_in_path ', len(images_in_path))
+	
+
 # function to read the directory and load images
 def read_images():
 	# fetched current path using os 
@@ -42,6 +69,11 @@ def read_images():
 	# printed just for checking
 	print('Images in path', images_in_path)
 	print('Length of list images_in_path ', len(images_in_path))
+
+	# if there are no images in the folder then throw error
+	if len(images_in_path) == 0:
+			error_no_images()
+
 	
 	# printed for cheking the current image
 	print('Current image path ', path + images_in_path[n])
@@ -106,8 +138,9 @@ def next_command():
 	elif n_plus_one :
 	 	next_button['state'] = 'normal'
 	 	previous_button['state'] = 'normal' # trex for switching back forward
-	# else if there is only one image in the list then disable both next and back button
-	elif len(images_in_path) == 1:
+	
+	# if there is only one image in the list then disable both next and back button
+	if len(images_in_path) == 1:
 		next_button['state'] = 'disabled'
 		previous_button['state'] = 'disabled'
 
@@ -178,6 +211,10 @@ def delete_command():
 		# call next button so that the viewer will show next image directly after deleting the current
 		# or recall read_images after delete T-Rex
 		read_images()
+
+def error_no_images():
+	messagebox.showerror('Error', "The folder doesn't contain any images!")
+	exit('Program exited.')
 
 ############################################### FUNCTIONS END #######################################################
 
@@ -255,9 +292,18 @@ next_button.grid(row=0, column=2, padx=50, pady=10, ipadx=5, ipady=5)
 
 
 
-# declared n as global and assigned 0
 global n
-n = 0
+global images_in_path
+fetch_images()
+
+# if there is one or more than one image in the folder 
+if len(images_in_path) >= 1:
+	# set index value n as 0
+	n = 0
+else:
+	# else throw error
+	error_no_images()
+
 print('n = ', n)
 # called function read images to read and display images
 read_images()
