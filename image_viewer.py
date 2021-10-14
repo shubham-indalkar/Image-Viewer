@@ -1,4 +1,4 @@
-#################################### IMPORTING ###################################
+#################################### IMPORT ###################################
 
 # imported everthing from tkinter
 from tkinter import *
@@ -11,7 +11,7 @@ import os
 # imported PIL to view jpeg images
 from PIL import ImageTk, Image
 
-###################################### END #######################################
+################################## IMPORT END #####################################
 
 
 
@@ -23,12 +23,12 @@ def read_images():
 	global path 
 	path = os.getcwd()
 	# printed just for checking
-	print('Path: ', path)
+	# print('Path: ', path)
 	
 	# fetched files in current path
 	files_in_path = list(os.listdir(path))
 	# printed just for checking
-	print('Files in path', files_in_path)
+	# print('Files in path', files_in_path)
 	
 	# created empty list to store images in path
 	global images_in_path
@@ -57,6 +57,18 @@ def read_images():
 	# called function label_for_image to add the image to label and display in window
 	label_for_image()
 	
+	# if only one image in folder 
+	if len(images_in_path) == 1 and n == 0:
+		# then disable both back and next button
+		next_button['state'] = 'disabled'
+		previous_button['state'] = 'disabled'
+
+	# if n is equal to the length of images then disable the next button
+	if n == (len(images_in_path)-1):
+		# then disable both back and next button
+		next_button['state'] = 'disabled'
+		previous_button['state'] = 'normal'
+
 	
 # function to create and display label
 def label_for_image():
@@ -72,8 +84,10 @@ def next_command():
 	global n
 	global images_in_path
 	global image
-	# incremented n by 1 to go to next image in list
-	if n >= 0:
+
+	# if its the first image and not the last image 
+	if n >= 0 and n != (len(images_in_path)-1):
+		# then incremented n by 1 to go to next image in list
 		n = n + 1
 
 	# called read_images to read and display the image
@@ -137,6 +151,9 @@ def delete_from_os():
 
 # function to display warning message and call delete_from_os is chose to delete 
 def delete_command():
+	global n
+	# checking n before deleting 
+	print('n before deleting = ', n)
 	# created a variable to store answer 
 	selected_option = messagebox.askyesno('Delete?', 'Are you sure?')
 	# if answer is yes
@@ -145,24 +162,24 @@ def delete_command():
 		delete_from_os()
 		# display message that the file is deleted
 		messagebox.showinfo('Done', 'Successfully deleted')
+
+		# checking n after deleting 
+		print('n after deleting = ', n)
+					
+		# if n was the last index of the list, that is if the image was the last image in the folder 
+		if n == (len(images_in_path)-1):
+			# then decrement the value of n by 1
+			n = n -1
 		
-		# recall read_images after delete -trex
+		# checking n after decrementing
+		# checking n before deleting 
+		print('n = ', n)
+
+		# call next button so that the viewer will show next image directly after deleting the current
+		# or recall read_images after delete T-Rex
 		read_images()
 
-		## function to call previous image if the last image is deleted
-		# global n
-		# # if the image is not the last image in the list then
-		# if n != -1:
-		# 	# recall read_images after delete -trex
-		# 	read_images()
-		# # else if the image is the last image in the list
-		# elif n == -1:
-		# 	# change value of n to -2, that is to point to the image before the last image
-		# 	n = -2
-		# 	# call the read_image 
-		# 	read_images()
-
-######################################################### END ##########################################################
+############################################### FUNCTIONS END #######################################################
 
 
 
@@ -197,15 +214,8 @@ image_frame.grid(row=0, column=0, padx=70, pady=15, ipadx=30, ipady=25)
 button_frame = Frame(root, borderwidth=7, relief='solid', width=600, height=60, bg='light cyan')
 button_frame.grid(row=1, column=0, padx=100, pady=5)
 
-##################################### END #############################################
+################################### FRAMES END ###########################################
 
-
-
-# declared n as global and assigned 0
-global n
-n = 0
-# called function read images to read and display images
-read_images()
 
 
 
@@ -240,9 +250,17 @@ next_button['font'] = format_font_previous_button
 # displayed the next button
 next_button.grid(row=0, column=2, padx=50, pady=10, ipadx=5, ipady=5)
 
-################################################################################## END ######################################################################################
+############################################################################## BUTTONS END ######################################################################################
 
 
+
+
+# declared n as global and assigned 0
+global n
+n = 0
+print('n = ', n)
+# called function read images to read and display images
+read_images()
 
 
 # displaying the window
