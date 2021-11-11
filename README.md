@@ -23,7 +23,13 @@
 ## About The Project
 
 ### Short Discription
-- This is a simple Image Viewer program made in Python 3.8 by [Andrio](https://t.me/andrio_official)
+- This is a simple Image Viewer program made with Tkinter in Python 3.8 by [Andrio](https://t.me/andrio_official)
+- When you run the program in a directory. It will fetch all the files in the directory using the OS module.
+- Then store the files name in a list and append all the files name ending with image format extensions(.png, .jpeg, .jpg) to an empty list.
+- Then iterate throughout the list using back and next buttons which just increment/decrement the index of image_list and show image using Pillow pip package.
+- Again the images are deleted using the os.remove funtion of the OS module.
+- More features coming soon.
+ 
 
 ### Built With
 * [Python](https://www.python.org/)
